@@ -1,97 +1,97 @@
-!DOCTYPE html
-html lang=ja
-head
-  meta charset=UTF-8 
-  meta name=viewport content=width=device-width, initial-scale=1 
-  titleGoogleログイン対応カレンダーtitle
-  style
-    root { --bg#f7f7fa; --card#fff; --line#e5e7eb; --text#111827; --muted#6b7280; --accent#111827; }
-     { box-sizing border-box; }
-    body { margin0; backgroundvar(--bg); colorvar(--text); font-family system-ui,-apple-system,Segoe UI,Roboto,Noto Sans JP,sans-serif; }
-    header { positionsticky; top0; z-index10; background#fff; border-bottom1px solid var(--line); padding10px 14px; displayflex; align-itemscenter; justify-contentspace-between; gap12px; }
-    .brand { font-weight700; }
-    .controls { displayflex; gap8px; align-itemscenter; flex-wrapwrap; }
-    button, label.btn { border1px solid var(--line); background#fff; padding8px 10px; border-radius10px; cursorpointer; fontinherit; }
-    button.primary { backgroundvar(--accent); color#fff; border-colorvar(--accent); }
-    .hidden { displaynone !important; }
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Googleログイン対応カレンダー</title>
+  <style>
+    :root { --bg:#f7f7fa; --card:#fff; --line:#e5e7eb; --text:#111827; --muted:#6b7280; --accent:#111827; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family: system-ui,-apple-system,Segoe UI,Roboto,"Noto Sans JP",sans-serif; }
+    header { position:sticky; top:0; z-index:10; background:#fff; border-bottom:1px solid var(--line); padding:10px 14px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .brand { font-weight:700; }
+    .controls { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    button, label.btn { border:1px solid var(--line); background:#fff; padding:8px 10px; border-radius:10px; cursor:pointer; font:inherit; }
+    button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .hidden { display:none !important; }
 
-     上部の操作群 
-    .toolbar { padding12px 14px; displayflex; flex-wrapwrap; gap10px; align-itemscenter; border-bottom1px solid var(--line); background#fff; }
-    .toolbar .spacer { flex 1 1 auto; }
+    /* 上部の操作群 */
+    .toolbar { padding:12px 14px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; border-bottom:1px solid var(--line); background:#fff; }
+    .toolbar .spacer { flex: 1 1 auto; }
 
-     カレンダー本体（テキストエリア版） 
-    #calendar { padding14px; }
-    table { width100%; border-collapseseparate; border-spacing8px; }
-    th { text-aligncenter; font-weight600; color#475569; }
-    td { vertical-aligntop; }
-    td.weekday { width180px; }
-    td.weekend { width90px; }
-    td.weekStart { width90px !important; }
-    .daycell { background#fff; border1px solid var(--line); border-radius12px; padding8px; }
-    .daycell header { displayflex; align-itemscenter; justify-contentspace-between; margin-bottom6px; }
-    .daynum { font-size14px; font-weight600; }
-    .has-data { width8px; height8px; border-radius50%; background#111827; }
-    textarea { overflowhidden; padding8px; width100%; height420px; resizenone; border1px solid var(--line); border-radius10px; fontinherit; }
-    .today { outline2px solid #e2e8f0; }
+    /* カレンダー本体（テキストエリア版） */
+    #calendar { padding:14px; }
+    table { width:100%; border-collapse:separate; border-spacing:8px; }
+    th { text-align:center; font-weight:600; color:#475569; }
+    td { vertical-align:top; }
+    td.weekday { width:180px; }
+    td.weekend { width:90px; }
+    td.weekStart { width:90px !important; }
+    .daycell { background:#fff; border:1px solid var(--line); border-radius:12px; padding:8px; }
+    .daycell header { display:flex; align-items:center; justify-content:space-between; margin-bottom:6px; }
+    .daynum { font-size:14px; font-weight:600; }
+    .has-data { width:8px; height:8px; border-radius:50%; background:#111827; }
+    textarea { overflow:hidden; padding:8px; width:100%; height:420px; resize:none; border:1px solid var(--line); border-radius:10px; font:inherit; }
+    .today { outline:2px solid #e2e8f0; }
 
-     画面右下・固定セーブ 
-    #saveButtonFixed { positionfixed; right12px; bottom12px; }
+    /* 画面右下・固定セーブ */
+    #saveButtonFixed { position:fixed; right:12px; bottom:12px; }
 
-     インポートのファイル入力は隠す 
-    .file-input { displaynone; }
-  style
-head
-body
-  header
-    div class=brandGoogleログイン対応カレンダーdiv
-    div id=auth-area class=controls
-      span id=user-info class=mutedログイン状態を確認中…span
-    div
-  header
+    /* インポートのファイル入力は隠す */
+    .file-input { display:none; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">Googleログイン対応カレンダー</div>
+    <div id="auth-area" class="controls">
+      <span id="user-info" class="muted">ログイン状態を確認中…</span>
+    </div>
+  </header>
 
-  div class=toolbar
-    div class=controls
-      labelYear input type=number id=yearInput style=width96pxlabel
-      labelMonth select id=monthInputselectlabel
-      button id=changeButtonChangebutton
-    div
+  <div class="toolbar">
+    <div class="controls">
+      <label>Year: <input type="number" id="yearInput" style="width:96px"></label>
+      <label>Month: <select id="monthInput"></select></label>
+      <button id="changeButton">Change</button>
+    </div>
 
-    div class=spacerdiv
+    <div class="spacer"></div>
 
-    div class=controls
-      button id=saveButton class=primarySavebutton
-      button id=blueButtonBluebutton
-      button id=blackButtonBlackbutton
-      button id=backupButtonExport JSONbutton
-      label for=uploadInput class=btnImport JSONlabel
-      input type=file id=uploadInput class=file-input accept=applicationjson 
-    div
-  div
+    <div class="controls">
+      <button id="saveButton" class="primary">Save</button>
+      <button id="blueButton">Blue</button>
+      <button id="blackButton">Black</button>
+      <button id="backupButton">Export JSON</button>
+      <label for="uploadInput" class="btn">Import JSON</label>
+      <input type="file" id="uploadInput" class="file-input" accept="application/json" />
+    </div>
+  </div>
 
-  div id=calendardiv
-  button id=saveButtonFixed class=primarySavebutton
+  <div id="calendar"></div>
+  <button id="saveButtonFixed" class="primary">Save</button>
 
-  script type=module
-     ================= Firebase SDK ================= 
-    import { initializeApp } from httpswww.gstatic.comfirebasejs10.12.2firebase-app.js;
-    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from httpswww.gstatic.comfirebasejs10.12.2firebase-auth.js;
-    import { getFirestore, doc, setDoc, getDoc, getDocs, collection, writeBatch, deleteDoc } from httpswww.gstatic.comfirebasejs10.12.2firebase-firestore.js;
+  <script type="module">
+    /* ================= Firebase SDK ================= */
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc, getDoc, getDocs, collection, writeBatch, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-     参考コードに合わせた設定（必要に応じて置き換えてください）
+    // 参考コードに合わせた設定（必要に応じて置き換えてください）
     const firebaseConfig = {
-      apiKey AIzaSyDuNluIfeulzr_hCr7bHtnCxE1cBneB4kM,
-      authDomain masu-memo.firebaseapp.com,
-      projectId masu-memo,
-      storageBucket masu-memo.appspot.com,
-      messagingSenderId 1065347011702,
-      appId 11065347011702webe417d565f28d000da83b57
+      apiKey: "AIzaSyDuNluIfeulzr_hCr7bHtnCxE1cBneB4kM",
+      authDomain: "masu-memo.firebaseapp.com",
+      projectId: "masu-memo",
+      storageBucket: "masu-memo.appspot.com",
+      messagingSenderId: "1065347011702",
+      appId: "1:1065347011702:web:e417d565f28d000da83b57"
     };
     const app = initializeApp(firebaseConfig);
     const auth = getAuth();
     const db = getFirestore();
     const provider = new GoogleAuthProvider();
 
-     ================= DOM ================= 
+    /* ================= DOM ================= */
     const yearInput = document.getElementById('yearInput');
     const monthInput = document.getElementById('monthInput');
     const calendarDiv = document.getElementById('calendar');
@@ -104,37 +104,37 @@ body
     const uploadInput = document.getElementById('uploadInput');
     const userInfo = document.getElementById('user-info');
 
-     ================= State ================= 
+    /* ================= State ================= */
     let focusedTextarea = null;
-    let monthCache = {};  {dateKey {text, color}}
+    let monthCache = {}; // {dateKey: {text, color}}
     let currentUser = null;
 
-     ================= Auth ================= 
+    /* ================= Auth ================= */
     async function signInWithGoogle(){
       try { await signInWithPopup(auth, provider); }
-      catch(e){ alert('Googleログインに失敗しました '+e.message); }
+      catch(e){ alert('Googleログインに失敗しました: '+e.message); }
     }
     async function signOutUser(){ try { await signOut(auth); } catch(e){ console.error(e); } }
-    window.signInWithGoogle = signInWithGoogle;  HTMLから呼び出しやすいように
+    window.signInWithGoogle = signInWithGoogle; // HTMLから呼び出しやすいように
     window.signOutUser = signOutUser;
 
-    onAuthStateChanged(auth, async (user) = {
+    onAuthStateChanged(auth, async (user) => {
       currentUser = user;
       if(user){
-        userInfo.innerHTML = `こんにちは、${user.displayName  user.email} さん button onclick=signOutUser()ログアウトbutton`;
-         表示中の年月で読み込み
+        userInfo.innerHTML = `こんにちは、${user.displayName || user.email} さん <button onclick="signOutUser()">ログアウト</button>`;
+        // 表示中の年月で読み込み
         await loadMonthFromFirestore();
         renderCalendar(getYear(), getMonth());
       }else{
-        userInfo.innerHTML = `button onclick=signInWithGoogle()Googleでログインbutton`;
+        userInfo.innerHTML = `<button onclick="signInWithGoogle()">Googleでログイン</button>`;
         monthCache = {};
-        renderCalendar(getYear(), getMonth());  未ログインでもUIは描画（編集不可に）
+        renderCalendar(getYear(), getMonth()); // 未ログインでもUIは描画（編集不可に）
       }
     });
 
-     ================= Helpers ================= 
-    const pad2 = n = String(n).padStart(2,'0');
-    const dateKey = (y,m,d) = `${y}-${pad2(m)}-${pad2(d)}`;
+    /* ================= Helpers ================= */
+    const pad2 = n => String(n).padStart(2,'0');
+    const dateKey = (y,m,d) => `${y}-${pad2(m)}-${pad2(d)}`;
     function getYear(){ return parseInt(yearInput.value, 10); }
     function getMonth(){ return parseInt(monthInput.value, 10); }
 
@@ -150,42 +150,42 @@ body
       return dateKey(t.getFullYear(), t.getMonth()+1, t.getDate());
     }
 
-     ================= Firestore IO ================= 
+    /* ================= Firestore I/O ================= */
     function colPath(uid){ return ['users', uid, 'events']; }
 
     async function loadMonthFromFirestore(){
       if(!currentUser) return;
-      monthCache = {};  月切り替え時に都度作り直す（簡潔実装）
+      monthCache = {}; // 月切り替え時に都度作り直す（簡潔実装）
       const y = getYear();
-      const m = getMonth()-1;  Dateは0始まり
+      const m = getMonth()-1; // Dateは0始まり
       const start = new Date(y, m, 1);
       const end   = new Date(y, m+1, 1);
 
-       今回はシンプルに全件取得→月でフィルタ（設計次第でクエリ分割可）
+      // 今回はシンプルに全件取得→月でフィルタ（設計次第でクエリ分割可）
       const snaps = await getDocs(collection(db, ...colPath(currentUser.uid)));
-      snaps.forEach(s = {
-        const id = s.id;  YYYY-MM-DD
-        const mRes = id.match(^(d{4})-(d{2})-(d{2})$);
+      snaps.forEach(s => {
+        const id = s.id; // YYYY-MM-DD
+        const mRes = id.match(/^(\d{4})-(\d{2})-(\d{2})$/);
         if(!mRes) return;
         const d = new Date(+mRes[1], +mRes[2]-1, +mRes[3]);
-        if(d = start && d  end){
+        if(d >= start && d < end){
           const data = s.data();
-          monthCache[id] = { text String(data.text  ''), color String(data.color  'black') };
+          monthCache[id] = { text: String(data?.text || ''), color: String(data?.color || 'black') };
         }
       });
 
-       翌月1週目も描画するので、そのぶんも先読み
-      const nextMonth = m === 11  1  m+2;  human month
-      const nextYear  = m === 11  y+1  y;
+      // 翌月1週目も描画するので、そのぶんも先読み
+      const nextMonth = m === 11 ? 1 : m+2; // human month
+      const nextYear  = m === 11 ? y+1 : y;
       const firstDowNext = new Date(nextYear, nextMonth-1, 1).getDay();
-      const extraDays = 7 - firstDowNext;  1週目に入る日数
-      if(extraDays  0){
-        for(let d=1; d=extraDays; d++){
+      const extraDays = 7 - firstDowNext; // 1週目に入る日数
+      if(extraDays > 0){
+        for(let d=1; d<=extraDays; d++){
           const k = dateKey(nextYear, nextMonth, d);
           const snap = await getDoc(doc(db, ...colPath(currentUser.uid), k));
           if(snap.exists()){
             const data = snap.data();
-            monthCache[k] = { text String(data.text  ''), color String(data.color  'black') };
+            monthCache[k] = { text: String(data?.text || ''), color: String(data?.color || 'black') };
           }
         }
       }
@@ -196,12 +196,12 @@ body
       const batch = writeBatch(db);
       const touched = new Set();
 
-      document.querySelectorAll('#calendar textarea').forEach(ta = {
+      document.querySelectorAll('#calendar textarea').forEach(ta => {
         const key = ta.dataset.date;
         const text = ta.value.trim();
-        const color = ta.style.color  'black';
+        const color = ta.style.color || 'black';
         if(text){
-          batch.set(doc(db, ...colPath(currentUser.uid), key), { text, color }, { mergetrue });
+          batch.set(doc(db, ...colPath(currentUser.uid), key), { text, color }, { merge:true });
           monthCache[key] = { text, color };
         }else{
           batch.delete(doc(db, ...colPath(currentUser.uid), key));
@@ -211,76 +211,76 @@ body
       });
 
       await batch.commit();
-       保存後もフォーカスは維持
+      // 保存後もフォーカスは維持
     }
 
-     ================= Calendar Render ================= 
+    /* ================= Calendar Render ================= */
     function renderCalendar(year, month){
-       月の見出し（曜日）
-      let html = 'tabletr';
-      ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d = html += `th${d}th`);
-      html += 'trtr';
+      // 月の見出し（曜日）
+      let html = '<table><tr>';
+      ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].forEach(d => html += `<th>${d}</th>`);
+      html += '</tr><tr>';
 
       const firstDay = new Date(year, month-1, 1).getDay();
       const daysInMonth = new Date(year, month, 0).getDate();
 
-      for(let i=0;ifirstDay;i++) html += 'tdtd';
+      for(let i=0;i<firstDay;i++) html += '<td></td>';
 
-      for(let day=1; day=daysInMonth; day++){
+      for(let day=1; day<=daysInMonth; day++){
         const k = dateKey(year, month, day);
-        const data = monthCache[k]  { text'', color'black' };
+        const data = monthCache[k] || { text:'', color:'black' };
         const cls = dayClassOf(year, month, day);
         const isToday = (k === todayKey());
-        html += `td class=${cls}div class=daycell ${isToday  'today'  ''}`+
-                `headerspan class=daynum${day}span`+
-                `${data.text  'span class=has-data title=保存済みspan'  ''}`+
-                `header`+
-                `textarea data-date=${k} style=color${data.color}; `+
-                `${currentUser  ''  'disabled'}${data.text.replace(g,'&lt;')}textarea`+
-                `divtd`;
+        html += `<td class="${cls}"><div class="daycell ${isToday ? 'today' : ''}">`+
+                `<header><span class="daynum">${day}</span>`+
+                `${data.text ? '<span class="has-data" title="保存済み"></span>' : ''}`+
+                `</header>`+
+                `<textarea data-date="${k}" style="color:${data.color};" `+
+                `${currentUser ? '' : 'disabled'}>${data.text.replace(/</g,'&lt;')}</textarea>`+
+                `</div></td>`;
         const dow = new Date(year, month-1, day).getDay();
-        if(dow === 6 && day  daysInMonth) html += 'trtr';
+        if(dow === 6 && day < daysInMonth) html += '</tr><tr>';
       }
 
-       月末の行を閉じた上で、必ず改行し翌月1週目を追加
-      html += 'trtr';
+      // 月末の行を閉じた上で、必ず改行し翌月1週目を追加
+      html += '</tr><tr>';
 
       const nextMonth = month % 12 + 1;
-      const nextYear  = (month === 12)  (year + 1)  year;
+      const nextYear  = (month === 12) ? (year + 1) : year;
       const firstDayOfNext = new Date(nextYear, nextMonth-1, 1).getDay();
 
-      for(let i=0; i7; i++){
+      for(let i=0; i<7; i++){
         const day = i - firstDayOfNext + 1;
-        if(day  0){
+        if(day > 0){
           const k = dateKey(nextYear, nextMonth, day);
-          const data = monthCache[k]  { text'', color'black' };
+          const data = monthCache[k] || { text:'', color:'black' };
           const cls = dayClassOf(nextYear, nextMonth, day);
-          html += `td class=${cls}div class=daycell`+
-                  `headerspan class=daynum${day}span`+
-                  `${data.text  'span class=has-data title=保存済みspan'  ''}`+
-                  `header`+
-                  `textarea data-date=${k} style=color${data.color}; ${currentUser  ''  'disabled'}${data.text.replace(g,'&lt;')}textarea`+
-                  `divtd`;
+          html += `<td class="${cls}"><div class="daycell">`+
+                  `<header><span class="daynum">${day}</span>`+
+                  `${data.text ? '<span class="has-data" title="保存済み"></span>' : ''}`+
+                  `</header>`+
+                  `<textarea data-date="${k}" style="color:${data.color};" ${currentUser ? '' : 'disabled'}>${data.text.replace(/</g,'&lt;')}</textarea>`+
+                  `</div></td>`;
         }else{
-          html += 'tdtd';
+          html += '<td></td>';
         }
       }
 
-      html += 'trtable';
+      html += '</tr></table>';
       calendarDiv.innerHTML = html;
 
-       フォーカス管理
-      document.querySelectorAll('#calendar textarea').forEach(ta = {
-        ta.addEventListener('focus', () = { focusedTextarea = ta; });
-         オートリサイズ（入力時に高さ調整）
-        const autoresize = (el) = { el.style.height = 'auto'; el.style.height = (el.scrollHeight+2)+'px'; };
+      // フォーカス管理
+      document.querySelectorAll('#calendar textarea').forEach(ta => {
+        ta.addEventListener('focus', () => { focusedTextarea = ta; });
+        // オートリサイズ（入力時に高さ調整）
+        const autoresize = (el) => { el.style.height = 'auto'; el.style.height = (el.scrollHeight+2)+'px'; };
         autoresize(ta);
-        ta.addEventListener('input', () = autoresize(ta));
+        ta.addEventListener('input', () => autoresize(ta));
       });
     }
 
-     ================= UI Events ================= 
-    changeButton.addEventListener('click', async () = {
+    /* ================= UI Events ================= */
+    changeButton.addEventListener('click', async () => {
       await loadMonthFromFirestore();
       renderCalendar(getYear(), getMonth());
     });
@@ -288,22 +288,22 @@ body
     saveButton.addEventListener('click', saveAllTextareas);
     saveButtonFixed.addEventListener('click', saveAllTextareas);
 
-    blueButton.addEventListener('click', () = {
+    blueButton.addEventListener('click', () => {
       if(focusedTextarea){ focusedTextarea.style.color = 'blue'; }
     });
-    blackButton.addEventListener('click', () = {
+    blackButton.addEventListener('click', () => {
       if(focusedTextarea){ focusedTextarea.style.color = 'black'; }
     });
 
-    backupButton.addEventListener('click', async () = {
+    backupButton.addEventListener('click', async () => {
       if(!currentUser){ alert('ログインしてください'); return; }
       const snaps = await getDocs(collection(db, ...colPath(currentUser.uid)));
       const out = {};
-      snaps.forEach(s = {
+      snaps.forEach(s => {
         const d = s.data();
-        out[s.id] = { text String(d.text  ''), color String(d.color  'black') };
+        out[s.id] = { text: String(d?.text || ''), color: String(d?.color || 'black') };
       });
-      const blob = new Blob([JSON.stringify(out, null, 2)], {type'applicationjson'});
+      const blob = new Blob([JSON.stringify(out, null, 2)], {type:'application/json'});
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       a.download = 'calendar_backup.json';
@@ -311,9 +311,9 @@ body
       URL.revokeObjectURL(a.href);
     });
 
-    uploadInput.addEventListener('change', async (e) = {
+    uploadInput.addEventListener('change', async (e) => {
       if(!currentUser){ alert('ログインしてください'); return; }
-      const f = e.target.files.[0]; if(!f) return;
+      const f = e.target.files?.[0]; if(!f) return;
       try{
         const text = await f.text();
         const json = JSON.parse(text);
@@ -321,13 +321,13 @@ body
         if(keys.length === 0){ alert('インポート対象が空です'); return; }
         const batch = writeBatch(db);
         for(const k of keys){
-          if(!^d{4}-d{2}-d{2}$.test(k)) continue;
+          if(!/^\d{4}-\d{2}-\d{2}$/.test(k)) continue;
           const val = json[k];
           const body = {
-            text String(val.text  ''),
-            color String(val.color  'black')
+            text: String(val?.text || ''),
+            color: String(val?.color || 'black')
           };
-          if(body.text){ batch.set(doc(db, ...colPath(currentUser.uid), k), body, { mergetrue }); }
+          if(body.text){ batch.set(doc(db, ...colPath(currentUser.uid), k), body, { merge:true }); }
           else { batch.delete(doc(db, ...colPath(currentUser.uid), k)); }
         }
         await batch.commit();
@@ -336,36 +336,36 @@ body
         alert('インポートしました');
       }catch(err){
         console.error(err);
-        alert('インポートに失敗しました '+err.message);
+        alert('インポートに失敗しました: '+err.message);
       }finally{
         uploadInput.value='';
       }
     });
 
-     月の選択肢を生成
-    for(let i=1; i=12; i++){
+    // 月の選択肢を生成
+    for(let i=1; i<=12; i++){
       const op = document.createElement('option');
       op.value = i; op.textContent = i; monthInput.appendChild(op);
     }
 
-     初期値を今日に
+    // 初期値を今日に
     const today = new Date();
     yearInput.value = today.getFullYear();
     monthInput.value = today.getMonth()+1;
 
-     未ログインでも初期レンダリング（編集不可）
+    // 未ログインでも初期レンダリング（編集不可）
     renderCalendar(getYear(), getMonth());
-  script
+  </script>
 
-  !-- Firestore セキュリティルール例（デプロイはFirebase側で）
+  <!-- Firestore セキュリティルール例（デプロイはFirebase側で）
   rules_version = '2';
   service cloud.firestore {
-    match databases{database}documents {
-      match users{userId}events{docId} {
-        allow read, write if request.auth != null && request.auth.uid == userId;
+    match /databases/{database}/documents {
+      match /users/{userId}/events/{docId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
       }
     }
   }
-  --
-body
-html
+  -->
+</body>
+</html>
